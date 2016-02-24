@@ -25,6 +25,5 @@
         "psr-4": {
             "Gamma\\FixturesBoostBundle\\": ""
         }
-    },
-    "target-dir": "Gamma/FixturesBoostBundle"
+    }
 }
