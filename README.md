@@ -9,7 +9,7 @@ Installation
 
     ```json
     {
-      "require": {
+      "require-dev": {
           "gamma/fixtures-boost-bundle": "dev-master"
       }
     }
