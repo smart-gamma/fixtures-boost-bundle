@@ -21,14 +21,10 @@
     "require-dev": {
         "symfony/console": "~2.3"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
-    },
     "autoload": {
         "psr-4": {
             "Gamma\\FixturesBoostBundle\\": ""
         }
-    }
+    },
+    "target-dir": "Gamma/FixturesBoostBundle"
 }
