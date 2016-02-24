@@ -16,7 +16,7 @@ class FixturesBoostCommandSpec extends ObjectBehavior
         $input->isInteractive()->willReturn(false);
         $input->validate()->willReturn();
         $input->getOption('clear')->willReturn(FixturesBoostService::CLEAR_MODE_SCHEMA);
-        $input->getOption('fixtures-dir')->willReturn('./');
+        $input->getOption('fixtures-dir')->willReturn('./fake');
         $input->getOption('log-file-dir')->willReturn('./');
         $input->hasArgument('command')->willReturn(false);
     }
@@ -38,6 +38,13 @@ class FixturesBoostCommandSpec extends ObjectBehavior
 
     function it_runs(InputInterface $input, OutputInterface $output)
     {
+        $this->run($input, $output);
+    }
+
+    function it_should_notify_if_fixtures_is_not_found(InputInterface $input, OutputInterface $output)
+    {
+        $input->getOption('fixtures-dir')->willReturn('./Resources');
+        $output->writeln('Fixtures not found in path: ./Resources')->shouldBeCalled();
         $this->run($input, $output);
     }
 }
