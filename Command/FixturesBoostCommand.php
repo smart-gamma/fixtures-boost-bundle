@@ -1,6 +1,6 @@
 <?php
 
-namespace Gamma\FisturesBoostBundle\Command;
+namespace Gamma\FixturesBoostBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
