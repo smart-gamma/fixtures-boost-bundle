@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class FixturesLoadCommand extends ContainerAwareCommand
+class FixturesBoostCommand extends ContainerAwareCommand
 {
     const FIXTURES_HASH_LOG = 'fixtures_hash.log';
     const FIXTURES_DUMP_SQL = 'fixtures_dump.sql';
