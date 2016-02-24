@@ -1,0 +1,34 @@
+{
+    "name":        "gamma/fixtures-boost-bundle",
+    "type":        "symfony-bundle",
+    "description": "Provides a command line task to speed up fixtures loading",
+    "keywords":    ["fixtures", "dump", "load", "testing"],
+    "homepage":    "https://github.com/smart-gamma/fixtures-boost-bundle",
+    "license":     "MIT",
+    "authors": [
+        {
+            "name": "Evgen Kuzmin",
+            "homepage": "https://github.com/Evgenas"
+        },
+        {
+            "name": "Dmytro Monastyreckyi",
+            "homepage": "https://github.com/orgs/smart-gamma/people/monobook"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": ">=2.3"
+    },
+    "require-dev": {
+        "symfony/console": ">=2.3",
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Gamma\\FixturesBoostBundle\\": ""
+        }
+    }
+}
