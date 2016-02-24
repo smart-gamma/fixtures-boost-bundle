@@ -5,6 +5,7 @@ namespace spec\Gamma\FixturesBoostBundle\Command;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Gamma\FixturesBoostBundle\Service\FixturesBoostService;
 
 class FixturesBoostCommandSpec extends ObjectBehavior
@@ -15,6 +16,9 @@ class FixturesBoostCommandSpec extends ObjectBehavior
         $input->isInteractive()->willReturn(false);
         $input->validate()->willReturn();
         $input->getOption('clear')->willReturn(FixturesBoostService::CLEAR_MODE_SCHEMA);
+        $input->getOption('fixtures-dir')->willReturn('./');
+        $input->getOption('log-file-dir')->willReturn('./');
+        $input->hasArgument('command')->willReturn(false);
     }
 
     function it_is_initializable()
@@ -32,4 +36,8 @@ class FixturesBoostCommandSpec extends ObjectBehavior
         $this->getName()->shouldReturn('gamma:fixtures:boostload');
     }
 
+    function it_runs(InputInterface $input, OutputInterface $output)
+    {
+        $this->run($input, $output);
+    }
 }
