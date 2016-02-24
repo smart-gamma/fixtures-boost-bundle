@@ -7,6 +7,7 @@ use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Gamma\FixturesBoostBundle\Service\FixturesBoostService;
+use Symfony\Component\Console\Application;
 
 class FixturesBoostCommandSpec extends ObjectBehavior
 {
@@ -47,4 +48,12 @@ class FixturesBoostCommandSpec extends ObjectBehavior
         $output->writeln('Fixtures not found in path: ./Resources')->shouldBeCalled();
         $this->run($input, $output);
     }
+
+    /*function it_should_find_fixtures(InputInterface $input, OutputInterface $output, Application $application)
+    {
+        $input->getOption('fixtures-dir')->willReturn('./TestData');
+        $output->writeln('Fixtures changed!')->shouldBeCalled();
+        //$this->getApplication()->willReturn($application);
+        $this->run($input, $output);
+    }*/
 }
