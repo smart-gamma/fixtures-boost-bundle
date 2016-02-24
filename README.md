@@ -35,3 +35,11 @@ Installation
          }
      }
     ```
+
+Git ignore
+==========
+add to your .gitignore file
+```
+	fixtures_dump.sql
+	fixtures_hash.log
+```
