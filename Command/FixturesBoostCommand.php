@@ -18,7 +18,7 @@ class FixturesLoadCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('live_life_main:fixtures:load')
+            ->setName('gamma:fixtures:boostload')
             ->setDescription('Check and load fixtures if changed.')
             ->addOption('clear', 'c', InputOption::VALUE_REQUIRED, 'Clear\Recreate database or schema. Available: schema, database')
             ->addOption('fixtures-dir', 'f', InputOption::VALUE_REQUIRED, 'Path to fixtures directory.')
