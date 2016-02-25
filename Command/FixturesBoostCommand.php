@@ -24,6 +24,9 @@ class FixturesBoostCommand extends ContainerAwareCommand
      */
     private $schemaDropCommand;
 
+    /**
+     * @var LoadDataFixturesDoctrineCommand
+     */
     private $fixturesLoadCommand;
 
     /**
@@ -33,6 +36,8 @@ class FixturesBoostCommand extends ContainerAwareCommand
 
     /**
      * @param DropSchemaDoctrineCommand $schemaDropCommand
+     * @param LoadDataFixturesDoctrineCommand $fixturesLoadCommand
+     * @param CreateSchemaDoctrineCommand $schemaCreateCommand
      */
     public function __construct(
         DropSchemaDoctrineCommand $schemaDropCommand,
