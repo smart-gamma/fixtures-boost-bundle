@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Gamma\\FixturesBoostBundle\\": ""
+            "Gamma\\FixturesBoostBundle\\": "src/Gamma/FixturesBoostBundle"
         }
     }
 }

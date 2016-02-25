@@ -59,8 +59,8 @@ class FixturesBoostCommandSpec extends ObjectBehavior
 
     function it_should_notify_if_fixtures_is_not_found(InputInterface $input, OutputInterface $output)
     {
-        $input->getOption('fixtures-dir')->willReturn('./Resources');
-        $output->writeln('Fixtures not found in path: ./Resources')->shouldBeCalled();
+        $input->getOption('fixtures-dir')->willReturn('./src');
+        $output->writeln('Fixtures not found in path: ./src')->shouldBeCalled();
         $this->run($input, $output);
     }
 
