@@ -1,7 +1,7 @@
 services:
     gamma.fixtures.booster.comman:
         class: Gamma\FixturesBoostBundle\Command\FixturesBoostCommand
-        arguments: [@doctrine.schema.drop.command]
+        arguments: [@doctrine.schema.drop.command, @doctrine.fixtures.load.command, @doctrine.schema.create.command]
         tags:
             -  { name: console.command }
 
@@ -12,6 +12,11 @@ services:
 
     doctrine.schema.drop.command:
         class: Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand
+        tags:
+            -  { name: console.command }
+
+    doctrine.schema.create.command:
+        class: Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand
         tags:
             -  { name: console.command }
 

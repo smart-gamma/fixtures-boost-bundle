@@ -9,10 +9,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Gamma\FixturesBoostBundle\Service\FixturesBoostService;
 use Symfony\Component\Console\Application;
 use Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand;
+use Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand;
+use Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand;
 
 class FixturesBoostCommandSpec extends ObjectBehavior
 {
-    function let(InputInterface $input, DropSchemaDoctrineCommand $dropSchemaDoctrineCommand)
+    function let(
+        InputInterface $input,
+        DropSchemaDoctrineCommand $dropSchemaDoctrineCommand,
+        LoadDataFixturesDoctrineCommand $fixturesLoadCommand,
+        CreateSchemaDoctrineCommand $createSchemaDoctrineCommand
+    )
     {
         $input->bind(Argument::cetera())->willReturn();
         $input->isInteractive()->willReturn(false);
@@ -24,7 +31,10 @@ class FixturesBoostCommandSpec extends ObjectBehavior
         $input->hasArgument('command')->willReturn(false);
 
         $dropSchemaDoctrineCommand->run(Argument::cetera())->willReturn(1);
-        $this->beConstructedWith($dropSchemaDoctrineCommand);
+        $fixturesLoadCommand->run(Argument::cetera())->willReturn(1);
+        $createSchemaDoctrineCommand->run(Argument::cetera())->willReturn(1);
+
+        $this->beConstructedWith($dropSchemaDoctrineCommand, $fixturesLoadCommand, $createSchemaDoctrineCommand);
     }
 
     function it_is_initializable()

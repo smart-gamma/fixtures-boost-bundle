@@ -10,6 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand;
+use Doctrine\Bundle\DoctrineBundle\Command\Proxy\CreateSchemaDoctrineCommand;
+use Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand;
+
 
 class FixturesBoostCommand extends ContainerAwareCommand
 {
@@ -21,12 +24,25 @@ class FixturesBoostCommand extends ContainerAwareCommand
      */
     private $schemaDropCommand;
 
+    private $fixturesLoadCommand;
+
+    /**
+     * @var CreateSchemaDoctrineCommand
+     */
+    private $schemaCreateCommand;
+
     /**
      * @param DropSchemaDoctrineCommand $schemaDropCommand
      */
-    public function __construct(DropSchemaDoctrineCommand $schemaDropCommand)
+    public function __construct(
+        DropSchemaDoctrineCommand $schemaDropCommand,
+        LoadDataFixturesDoctrineCommand $fixturesLoadCommand,
+        CreateSchemaDoctrineCommand $schemaCreateCommand
+    )
     {
         $this->schemaDropCommand = $schemaDropCommand;
+        $this->fixturesLoadCommand = $fixturesLoadCommand;
+        $this->schemaCreateCommand = $schemaCreateCommand;
 
         parent::__construct();
     }
@@ -141,16 +157,13 @@ class FixturesBoostCommand extends ContainerAwareCommand
      */
     protected function loadFixtures(InputInterface $input, OutputInterface $output)
     {
-        //$command = $this->getApplication()->find('doctrine:fixtures:load');
-        $command = $this->getContainer()->get('doctrine.fixtures.load.command');
-
         $inputArgs = new ArrayInput([
             '--env' => $input->getOption('env'),
         ]);
 
         $inputArgs->setInteractive(false);
 
-        $returnCode = $command->run($inputArgs, $output);
+        $returnCode = $this->fixturesLoadCommand->run($inputArgs, $output);
 
         if ($returnCode !== 0) {
             return false;
@@ -169,7 +182,7 @@ class FixturesBoostCommand extends ContainerAwareCommand
      */
     private function createSchema(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getApplication()->find('doctrine:schema:create');
+       // $command = $this->getApplication()->find('doctrine:schema:create');
 
         $inputArgs = new ArrayInput([
             '--env' => $input->getOption('env'),
@@ -177,7 +190,7 @@ class FixturesBoostCommand extends ContainerAwareCommand
 
         $inputArgs->setInteractive(false);
 
-        $returnCode = $command->run($inputArgs, $output);
+        $returnCode = $this->schemaCreateCommand->run($inputArgs, $output);
 
         if (0 !== $returnCode) {
             return false;
