@@ -9,11 +9,27 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand;
 
 class FixturesBoostCommand extends ContainerAwareCommand
 {
     const FIXTURES_HASH_LOG = 'fixtures_hash.log';
     const FIXTURES_DUMP_SQL = 'fixtures_dump.sql';
+
+    /**
+     * @var DropSchemaDoctrineCommand
+     */
+    private $schemaDropCommand;
+
+    /**
+     * @param DropSchemaDoctrineCommand $schemaDropCommand
+     */
+    public function __construct(DropSchemaDoctrineCommand $schemaDropCommand)
+    {
+        $this->schemaDropCommand = $schemaDropCommand;
+
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -125,7 +141,8 @@ class FixturesBoostCommand extends ContainerAwareCommand
      */
     protected function loadFixtures(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getApplication()->find('doctrine:fixtures:load');
+        //$command = $this->getApplication()->find('doctrine:fixtures:load');
+        $command = $this->getContainer()->get('doctrine.fixtures.load.command');
 
         $inputArgs = new ArrayInput([
             '--env' => $input->getOption('env'),
@@ -179,8 +196,8 @@ class FixturesBoostCommand extends ContainerAwareCommand
      */
     private function dropSchema(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->getApplication()->find('doctrine:schema:drop');
-
+       // $command = $this->getApplication()->find('doctrine:schema:drop');
+       // $command = $this->getContainer()->get('doctrine.schema.drop.command');
         $inputArgs = new ArrayInput([
             '--env' => $input->getOption('env'),
             '--force' => true,
@@ -188,7 +205,7 @@ class FixturesBoostCommand extends ContainerAwareCommand
 
         $inputArgs->setInteractive(false);
 
-        $returnCode = $command->run($inputArgs, $output);
+        $returnCode = $this->schemaDropCommand->run($inputArgs, $output);
 
         if (0 !== $returnCode) {
             return false;

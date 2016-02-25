@@ -1,0 +1,17 @@
+services:
+    gamma.fixtures.booster.comman:
+        class: Gamma\FixturesBoostBundle\Command\FixturesBoostCommand
+        arguments: [@doctrine.schema.drop.command]
+        tags:
+            -  { name: console.command }
+
+    doctrine.fixtures.load.command:
+        class: Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand
+        tags:
+            -  { name: console.command }
+
+    doctrine.schema.drop.command:
+        class: Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand
+        tags:
+            -  { name: console.command }
+

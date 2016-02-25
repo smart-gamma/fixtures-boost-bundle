@@ -8,18 +8,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Gamma\FixturesBoostBundle\Service\FixturesBoostService;
 use Symfony\Component\Console\Application;
+use Doctrine\Bundle\DoctrineBundle\Command\Proxy\DropSchemaDoctrineCommand;
 
 class FixturesBoostCommandSpec extends ObjectBehavior
 {
-    function let(InputInterface $input)
+    function let(InputInterface $input, DropSchemaDoctrineCommand $dropSchemaDoctrineCommand)
     {
         $input->bind(Argument::cetera())->willReturn();
         $input->isInteractive()->willReturn(false);
         $input->validate()->willReturn();
         $input->getOption('clear')->willReturn(FixturesBoostService::CLEAR_MODE_SCHEMA);
         $input->getOption('fixtures-dir')->willReturn('./fake');
+        $input->getOption('env')->willReturn('test');
         $input->getOption('log-file-dir')->willReturn('./');
         $input->hasArgument('command')->willReturn(false);
+
+        $dropSchemaDoctrineCommand->run(Argument::cetera())->willReturn(1);
+        $this->beConstructedWith($dropSchemaDoctrineCommand);
     }
 
     function it_is_initializable()
@@ -49,11 +54,10 @@ class FixturesBoostCommandSpec extends ObjectBehavior
         $this->run($input, $output);
     }
 
-    /*function it_should_find_fixtures(InputInterface $input, OutputInterface $output, Application $application)
+    function it_should_find_fixtures(InputInterface $input, OutputInterface $output, Application $application)
     {
         $input->getOption('fixtures-dir')->willReturn('./TestData');
         $output->writeln('Fixtures changed!')->shouldBeCalled();
-        //$this->getApplication()->willReturn($application);
         $this->run($input, $output);
-    }*/
+    }
 }
